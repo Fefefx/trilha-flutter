@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:trilhaapp/pages/login_page.dart';
 
-import 'pages/home_page.dart';
+// import 'pages/home_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -10,10 +11,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: const LoginPage(),
       theme: ThemeData(
-          primarySwatch: Colors.red,
-          textTheme: GoogleFonts.pacificoTextTheme()),
+          primarySwatch: Colors.red, textTheme: GoogleFonts.robotoTextTheme()),
     );
   }
 }
