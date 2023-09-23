@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trilhaapp/pages/mian_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -8,6 +9,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var emailController = TextEditingController(text: '');
+  var passwordController = TextEditingController(text: '');
+
+  bool isObscureText = true;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -60,9 +66,10 @@ class _LoginPageState extends State<LoginPage> {
                         alignment: Alignment.center,
                         margin: const EdgeInsets.symmetric(horizontal: 20),
                         height: 30,
-                        child: const TextField(
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
+                        child: TextField(
+                          controller: emailController,
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
                               contentPadding: EdgeInsets.only(top: 0),
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -87,24 +94,37 @@ class _LoginPageState extends State<LoginPage> {
                         alignment: Alignment.center,
                         margin: const EdgeInsets.symmetric(horizontal: 20),
                         height: 30,
-                        child: const TextField(
-                          style: TextStyle(color: Colors.white),
+                        child: TextField(
+                          obscureText: isObscureText,
+                          controller: passwordController,
+                          style: const TextStyle(color: Colors.white),
                           decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(top: 0),
-                              enabledBorder: UnderlineInputBorder(
+                              contentPadding: const EdgeInsets.only(top: 0),
+                              enabledBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(
                                       color:
                                           Color.fromARGB(255, 141, 79, 151))),
-                              focusedBorder: UnderlineInputBorder(
+                              focusedBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(
                                       color:
                                           Color.fromARGB(255, 141, 79, 151))),
                               hintText: "Senha",
-                              hintStyle: TextStyle(color: Colors.white),
-                              prefixIcon: Icon(Icons.lock,
+                              hintStyle: const TextStyle(color: Colors.white),
+                              prefixIcon: const Icon(Icons.lock,
                                   color: Color.fromARGB(255, 141, 79, 151)),
-                              suffixIcon: Icon(Icons.visibility,
-                                  color: Color.fromARGB(255, 141, 79, 151))),
+                              suffixIcon: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    isObscureText = !isObscureText;
+                                  });
+                                },
+                                child: Icon(
+                                    isObscureText
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: const Color.fromARGB(
+                                        255, 141, 79, 151)),
+                              )),
                         )),
                     const SizedBox(
                       height: 30,
@@ -116,7 +136,21 @@ class _LoginPageState extends State<LoginPage> {
                       child: SizedBox(
                         width: double.infinity,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (emailController.text.trim() ==
+                                    'email@email.com' &&
+                                passwordController.text.trim() == '123') {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const MainPage()));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text('Erro ao efetuar o Login')));
+                            }
+                          },
                           style: ButtonStyle(
                               shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
