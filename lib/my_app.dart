@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const LoginPage(),
       theme: ThemeData(
-          primarySwatch: Colors.red, textTheme: GoogleFonts.robotoTextTheme()),
+          primarySwatch: Colors.blue, textTheme: GoogleFonts.robotoTextTheme()),
     );
   }
 }
