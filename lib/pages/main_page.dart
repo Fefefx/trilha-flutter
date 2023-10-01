@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trilhaapp/pages/page1.dart';
+import 'package:trilhaapp/pages/page2.dart';
+import 'package:trilhaapp/pages/page3.dart';
 import 'package:trilhaapp/pages/registration_data.dart';
 
 class MainPage extends StatefulWidget {
@@ -9,6 +12,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  PageController controller = PageController(initialPage: 0);
+  int pagePosition = 0;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,6 +67,35 @@ class _MainPageState extends State<MainPage> {
               ],
             ),
           ),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: PageView(
+                // scrollDirection: Axis.vertical,
+                controller: controller,
+                onPageChanged: (value) {
+                  setState(() {
+                    pagePosition = value;
+                  });
+                },
+                children: const [Page1(), Page2(), Page3()],
+              ),
+            ),
+            BottomNavigationBar(
+                currentIndex: pagePosition,
+                onTap: (value) {
+                  controller.jumpToPage(value);
+                },
+                items: const [
+                  BottomNavigationBarItem(
+                      label: 'Page1', icon: Icon(Icons.home)),
+                  BottomNavigationBarItem(
+                      label: 'Page2', icon: Icon(Icons.add)),
+                  BottomNavigationBarItem(
+                      label: 'Page3', icon: Icon(Icons.person)),
+                ]),
+          ],
         ),
       ),
     );
